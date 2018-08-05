@@ -1,6 +1,6 @@
-# synth-web
+# Fluffy synths
 
-> test
+Simple experiment with Web Audio API. There are three oscillators, simple ADSR filter, volume control and the keyboard to play.
 
 ## Build Setup
 
