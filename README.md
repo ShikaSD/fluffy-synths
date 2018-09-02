@@ -1,4 +1,4 @@
-# Fluffy synths
+# [Fluffy synths](https://shikasd.github.io/fluffy-synths/)
 
 Simple experiment with Web Audio API. There are three oscillators, simple ADSR filter, volume control and the keyboard to play.
 
