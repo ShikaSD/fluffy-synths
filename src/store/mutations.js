@@ -40,7 +40,8 @@ export default {
     node(vm.id).params({
       filter: {
         type: vm.type,
-        frequency: Math.pow(1.5, vm.frequency)
+        frequency: Math.pow(1.28, vm.frequency),
+        resonance: vm.resonance * 0.1 + 1
       }
     })
   }

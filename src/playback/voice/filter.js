@@ -11,13 +11,14 @@ export default class FilterNode extends AudioInOut {
 
     this._params = Object.assign(params, {
       frequency: 0.1,
-      type: 'highpass'
+      type: 'highpass',
+      resonance: 1
     })
 
     this._updateParams()
   }
   _updateParams() {
-    console.log(this._params)
+    this._node.Q.exponentialRampToValueAtTime(this._params.resonance, this.context.currentTime + 0.1)
     this._node.frequency.exponentialRampToValueAtTime(this._params.frequency, this.context.currentTime + 0.1)
     this._node.type = this._params.type
   }
