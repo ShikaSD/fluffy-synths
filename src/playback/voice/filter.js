@@ -9,10 +9,10 @@ export default class FilterNode extends AudioInOut {
     this._input = this._node
     this._output = this._node
 
-    this._params = Object.assign({
-      frequency: 440,
-      type: 'lowpass'
-    }, params)
+    this._params = Object.assign(params, {
+      frequency: 0.1,
+      type: 'highpass'
+    })
 
     this._updateParams()
   }

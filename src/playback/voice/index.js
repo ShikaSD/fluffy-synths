@@ -21,8 +21,8 @@ export default class Voice extends AudioOut {
         release: 1e-30
       },
       filter: {
-        type: 'highpass',
-        frequency: 440
+        type: 'lowpass',
+        frequency: 0.1
       }
     }, params)
 

@@ -4,7 +4,7 @@
       <option>highpass</option>
       <option>lowpass</option>
     </select>
-    <input name="frequency" type="range" min="0" max="100" v-model="frequency"/>
+    <input name="frequency" type="range" min="0" max="40" v-model="frequency"/>
   </div>
 </template>
 
