@@ -26,14 +26,21 @@ export default {
   },
   volume(state, vm) {
     node(vm.id).params({
-      volume: vm.volume * 0.01
+      volume: vm.volume * 0.01 + 1e-30
     })
   },
   detune(state, vm) {
-    console.log(vm.detune, (vm.detune * 0.01 - 0.5) * 1200)
     node(vm.id).params({
       oscillator: {
         detune: (vm.detune * 0.01 - 0.5) * 2400
+      }
+    })
+  },
+  filter(state, vm) {
+    node(vm.id).params({
+      filter: {
+        type: vm.type,
+        frequency: 2 ^ vm.frequency
       }
     })
   }

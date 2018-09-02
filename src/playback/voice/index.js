@@ -2,6 +2,7 @@ import { AudioOut } from '../base'
 import OscillatorNode from './oscillator.js'
 import AdsrNode from './adsr'
 import Volume from './volume'
+import FilterNode from './filter'
 
 export default class Voice extends AudioOut {
   constructor(params) {
@@ -10,7 +11,7 @@ export default class Voice extends AudioOut {
     this._params = Object.assign({
       volume: 1.0,
       oscillator: {
-        volume: 'sine',
+        type: 'sine',
         frequency: 440
       },
       adsr: {
@@ -18,10 +19,17 @@ export default class Voice extends AudioOut {
         sustain: 1.0,
         decay: 1e-30,
         release: 1e-30
+      },
+      filter: {
+        type: 'highpass',
+        frequency: 440
       }
     }, params)
 
+    this._filter = new FilterNode(this._params.filter)
     this._volume = new Volume()
+
+    this._filter.output().connect(this._volume.input())
 
     this._voices = new Map()
     this._updateParams()
@@ -39,7 +47,7 @@ export default class Voice extends AudioOut {
     }))
     const adsr = new AdsrNode(this._params.adsr)
     osc.output().connect(adsr.input())
-    adsr.output().connect(this._volume.input())
+    adsr.output().connect(this._filter.input())
 
     this._voices.set(frequency, {
       oscillator: osc,
@@ -61,7 +69,7 @@ export default class Voice extends AudioOut {
     osc.stop(oscStop + 1)
     osc.output().onended = function () { 
       adsr.output().disconnect()
-      osc.output().disconnect() 
+      osc.output().disconnect()
     }
 
     this._voices.delete(frequency)
@@ -69,11 +77,17 @@ export default class Voice extends AudioOut {
   params(params) {
     const oscillator = Object.assign(this._params.oscillator, params.oscillator)
     const adsr = Object.assign(this._params.adsr, params.adsr)
-    this._params = Object.assign(this._params, params.oscillator)
+    const filter = Object.assign(this._params.filter, params.filter)
+
+    this._params = Object.assign(this._params, params)
     this._params.adsr = adsr
     this._params.oscillator = oscillator
+    this._params.filter = filter
+
+    this._updateParams()
   }
   _updateParams() {
     this._volume.params(this._params)
+    this._filter.params(this._params.filter)
   }
 }

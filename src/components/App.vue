@@ -15,6 +15,9 @@
       <div class="module">
         <analyzer :analyzer="analyzer"/>
       </div>
+      <div class="module">
+        <envelope />
+      </div>
     </div>
   </div>
 </template>
@@ -23,6 +26,7 @@
 import Keyboard from './keyboard/Keyboard.vue'
 import Voice from './modules/voice/Voice.vue'
 import Analyzer from './modules/analyzer/Analyzer.vue'
+import Envelope from './modules/Envelope.vue'
 
 import { add, connect, node } from '../playback'
 import MasterNode from '../playback/master.js'
@@ -33,7 +37,8 @@ export default {
   components: {
     Keyboard,
     Voice,
-    Analyzer
+    Analyzer, 
+    Envelope
   },
   computed: {
     analyzer() {
